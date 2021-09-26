@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { UserService } from '../../services/user.service';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../store/app.reducers';
+import { loadUsers } from '../../store/actions/users.actions';
+
 import { User } from '../../models/user.model';
 
 @Component({
@@ -11,9 +14,11 @@ import { User } from '../../models/user.model';
 export class ListComponent implements OnInit {
   users: User[] = [];
 
-  constructor(private _userService: UserService) {}
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
-    this._userService.getUsers().subscribe((users) => (this.users = users));
+    this.store.dispatch(loadUsers());
+
+    this.store.select('users').subscribe(({ users }) => (this.users = users));
   }
 }
