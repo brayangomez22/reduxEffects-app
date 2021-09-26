@@ -30,7 +30,7 @@ const _usersReducer = createReducer(
 
   on(loadUsersError, (state, { payload }) => ({
     ...state,
-    loading_: false,
+    loading: false,
     loaded: false,
     error: payload,
   }))
